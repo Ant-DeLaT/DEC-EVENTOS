@@ -21,6 +21,9 @@ body{
     background-color: #f8f9fa;
 }
 
+footer{
+    left: 40%
+}
 .navbar {
     margin-bottom: 20px;
 }

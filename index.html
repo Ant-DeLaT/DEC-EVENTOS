@@ -16,26 +16,36 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
+        <link rel="stylesheet" href="/css/Ofelia2.css">
     </head>
-
+        <!-- <script src="/libs/jquery-3.7.1.min.js"></script> -->
+        
     <body>
         <header>
-            Bienvenido
+            <h1>Bienvenido al Login</h1>
         </header>
-        <main>
-            <form action="">
+        <main >
+            <div >
                 <label for="correo">Email:</label>
-                <input type="email" name="CorreoElectronico" id="correo">
-                <label for="contra">Contraseña</label>
-                <input type="text" name="Contraseña" id="contra">
-                <button class="btn btn-success">Identificarse</button>
-                <small><a href="Registro">¿No está registrado?</a></small>
-            </form>
+                <input type="email" name="CorreoElectronico" id="correo"><br><br>
+                <label for="contra">Contraseña:</label>
+                <input type="password" name="Contraseña" id="contra"><button id="revela">&empty;</button><br><br>
+                <button class="btn btn-success" class="login" >Identificarse</button>
+                <br>
+                <button class="btn btn-link" id="vueltaRegistro" class="login">¿No está registrado?</button>
+                <br>
+                <label for="contra2" class="registro">Repita la contraseña:</label>
+                <input type="password"  name="Contraseña" id="contra2" class="registro"><button id="revela" class="registro">&empty;</button><br><br>
+                <button class="btn btn-success" class="registro">Registrarse</button><br>
+                <button class="btn btn-link" id="vueltaLogin" class="registro">¿Ya está registrado?</button>
+                <!-- UNA SOLA TABLA, BOTON CAMBIAZO SI HACE FALTA -->
+            </div>
         </main>
         <footer>
-            <!-- place footer here -->
+            &copy; Ant-DeLaT 2025
         </footer>
         <!-- Bootstrap JavaScript Libraries -->
+        <script src="js/superintendente.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

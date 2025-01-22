@@ -18,27 +18,30 @@
         />
         <link rel="stylesheet" href="css/Ofelia2.css">
     </head>
-        <!-- <script src="/libs/jquery-3.7.1.min.js"></script> -->
+        <script src="libs/jquery-3.7.1.min.js"></script>
         
     <body>
         <header>
-            <h1>Bienvenido al Login</h1>
+            <h1 id="TITULAR">Bienvenido al Login</h1>
         </header>
         <main >
             <div >
+                <div id="textoAviso"></div>
                 <label for="correo">Email:</label>
-                <input type="email" name="CorreoElectronico" id="correo"><br><br>
+                <input  class="in" type="email" name="CorreoElectronico" id="correo"><br><br>
                 <label for="contra">Contraseña:</label>
-                <input type="password" name="Contraseña" id="contra"><button id="revela">&empty;</button><br><br>
-                <button class="btn btn-success login" id="Identificarse">Identificarse</button>
+                <input type="password" name="Contraseña" id="contra"><button id="revela" onclick="contraVisible()">&empty;</button><br><br>
+                <button class="btn btn-success login" id="identificarse">Identificarse</button>
                 <br>
-                <button class="btn btn-link login" id="vueltaRegistro" >¿No está registrado?</button>
+                <button class="btn btn-link login" id="ocultaLogin">¿No está registrado?</button>
                 <br>
+                <div class="registro" id="textoNoContra"></div>
                 <label for="contra2" class="registro">Repita la contraseña:</label>
-                <input type="password"  name="Contraseña" id="contra2" class="registro"><button id="revela" class="registro">&empty;</button><br><br>
-                <button class="btn btn-success registro">Registrarse</button><br>
-                <button class="btn btn-link registro" id="vueltaLogin" >¿Ya está registrado?</button>
+                <input type="password"  name="Contraseña" id="contra2" class="registro"><button id="revela2" class="registro" onclick="contraVisible()">&empty;</button><br><br>
+                <button class="btn btn-success registro" id="Registrarse">Registrarse</button><br>
+                <button class="btn btn-link registro" id="ocultaRegistro" >¿Ya está registrado?</button>
                 <!-- UNA SOLA TABLA, BOTON CAMBIAZO SI HACE FALTA -->
+                 <!-- <button onclick="cambio()">CAMBIAZO</button> -->
             </div>
         </main>
         <footer>

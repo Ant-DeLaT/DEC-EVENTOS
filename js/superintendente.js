@@ -2,13 +2,13 @@
 
 // alert("MORTADELO, FILEMÓN!!!!");
 
-// 
+ 
 let arrayCorreos;
 if(localStorage.getItem("arrayCorreos")===null){
     arrayCorreos=Array(Array("correo@prueba.com","1234contra"),Array("test@test.com","contraseña"));
     localStorage.setItem("arrayCorreos",JSON.stringify(arrayCorreos))
 }else{
-    arrayCorreos=(localStorage.getItem("arrayCorreos")).valueOf;
+    arrayCorreos=JSON.parse(localStorage.getItem("arrayCorreos"));
 }
 function contraVisible(){
     if(document.getElementById("revela").type==="password"){
@@ -35,10 +35,12 @@ $("#ocultaRegistro").click(function(){
     $("#TITULAR").text("Bienvenido al Login")
     }
 ),
+// Cierre sesion admin.html
 $("#cierreSesion").click(
-    localStorage.removeItem("correoNuevo"),
-    localStorage.removeItem("contraNueva")
+    localStorage.removeItem("correoUsado"),
 ),
+// comprobaciones extra: 4-12 caracteres contraseña
+// 
     setInterval(function(){
         let cor=$("#correo").val();
         
@@ -71,19 +73,21 @@ $("#cierreSesion").click(
     $("#identificarse").on("click",()=>{
         // comparar pareja email-contraseña con entrante
         // alert("login")
-        let vuelta=0;
-            function comparaParejas(valP,conP) {
-                console.log(arrayCorreos());
+        // let vuelta=0;
+            function comparaParejas(corrP,conP) {
+                console.log(arrayCorreos);
                 for (let i = 0; i < arrayCorreos.length; i++) {
-                    if(arrayCorreos[i][0]==valP && arrayCorreos[i][1]==conP){
+                    if(arrayCorreos[i][0]==corrP && arrayCorreos[i][1]==conP){
                         console.log("coincidencia\n");
+                        localStorage.setItem("correoUsado",corrP)
                         window.location.href="admin.html"
                         break;
                     }else{
-                        console.log("i",i)
-                        console.log("arrayCorreos[i][0] ",arrayCorreos[i][0])
-                        console.log("arrayCorreos[i][1]",arrayCorreos[i][1])
-                        console.log("vuelta",vuelta++)
+                        console.log("NO HA SIDO IDENTIFICADO")
+                        // console.log("i",i)
+                        // console.log("arrayCorreos[i][0] ",arrayCorreos[i][0])
+                        // console.log("arrayCorreos[i][1]",arrayCorreos[i][1])
+                        // console.log("vuelta",vuelta++)
                         
                     }
                 }
@@ -97,7 +101,7 @@ $("#cierreSesion").click(
             if(con1==con2){
                 arrayCorreos.push([$("#correo").val(),con1])
                 localStorage.setItem("arrayCorreos",JSON.stringify(arrayCorreos))
-                window.location.href("admin.html")
+                window.location.href="index.html"
             }else{
                 alert("La pareja de contraseñas no es idéntica")
             }

@@ -1,26 +1,78 @@
-// Vicente
+// Vicente; main.js
 
 // alert("MORTADELO, FILEMÓN!!!!");
 
- 
+// localStorage
 let arrayCorreos;
 if(localStorage.getItem("arrayCorreos")===null){
     arrayCorreos=Array(Array("correo@prueba.com","1234contra"),Array("test@test.com","contraseña"));
     localStorage.setItem("arrayCorreos",JSON.stringify(arrayCorreos))
 }else{
+    // JSON parse se encarga de pasar la información de JSON a otros tipos,
+    // en este caso se ha usado para volver a tener Arrays útiles (partiendo de JSON)
     arrayCorreos=JSON.parse(localStorage.getItem("arrayCorreos"));
 }
-function contraVisible(){
-    if(document.getElementById("revela").type==="password"){
-        document.getElementById("revela").type ="text";
-        document.getElementById("revela2").type="text";
-    }else{
-        document.getElementById("revela").type ="password";
-        document.getElementById("revela2").type="password";
-    }
-}
-// DOM ready
+// Visibilidad Contraseñas, no funciona
+// function contraVisible(){
+//     if(document.getElementById("revela").type==="password"){
+//         document.getElementById("revela").type ="text";
+//         document.getElementById("revela2").type="text";
+//     }else{
+//         document.getElementById("revela").type ="password";
+//         document.getElementById("revela2").type="password";
+//     }
+// }
+
+// Cierre sesion admin.html
+$("#cierreSesion").click(
+    localStorage.removeItem("correoUsado"),
+)
+
+
+// DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready
+
+// DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready
+
 $().ready(
+    ()=>{
+        let ubicacion=window.location.pathname.split("/").pop();
+        if (ubicacion==="admin.html") {
+            let arrayCorreos2=JSON.parse(localStorage.getItem("arrayCorreos"));
+            //  Husmear es la tabla de admin.html
+            // alert("FUNCIONA?");
+            for (let index = 0; index < arrayCorreos.length; index++) {
+                // console.log(`<tr><td>${arrayCorreos2[index][0]}</td><td>${arrayCorreos2[index][1]}</td><td><button class='btn btn-danger'>Eliminar</button></td></tr>`);
+                $("#Husmear").append(`<tr><td>${arrayCorreos2[index][0]}</td><td>${arrayCorreos2[index][1]}</td><td><button class='btn btn-danger'>Eliminar</button></td></tr>`);
+            }
+            $("#Husmear").DataTable({
+                language: {
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                    loadingRecords: "Cargando...",
+                    zeroRecords: "No se encontraron resultados",
+                    emptyTable: "Ningún dato disponible en esta tabla",
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    },
+                    aria: {
+                        sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        }else{
+    
+
+
+
+
     $("#ocultaLogin").click(function(){
         // alert("click"),
         $(".registro").css("display","inline"),
@@ -35,11 +87,8 @@ $("#ocultaRegistro").click(function(){
     $("#TITULAR").text("Bienvenido al Login")
     }
 ),
-// Cierre sesion admin.html
-$("#cierreSesion").click(
-    localStorage.removeItem("correoUsado"),
-),
-// comprobaciones extra: 4-12 caracteres contraseña
+
+// comprobaciones extra: 4-12 caracteres contraseña, no cuentas repetidas
 // 
     setInterval(function(){
         let cor=$("#correo").val();
@@ -54,7 +103,7 @@ $("#cierreSesion").click(
             $("#textoAviso").css("display","none")
         }
     },500),
-    document.write($("#correo").val()),
+    // document.write($("#correo").val()),
     setInterval(function(){
         let con=$("#contra").val();
         let con2=$("#contra2").val();
@@ -68,29 +117,33 @@ $("#cierreSesion").click(
         }
     },500),
 
-    console.log($("#contra2").val(),$("#contra2").val()==""),
+    // console.log($("#contra2").val(),$("#contra2").val()==""),
 
+
+    // LOGIN 
     $("#identificarse").on("click",()=>{
         // comparar pareja email-contraseña con entrante
         // alert("login")
-        // let vuelta=0;
+        
             function comparaParejas(corrP,conP) {
                 console.log(arrayCorreos);
+                let val=false;
+                // let vuelta=0;
                 for (let i = 0; i < arrayCorreos.length; i++) {
                     if(arrayCorreos[i][0]==corrP && arrayCorreos[i][1]==conP){
-                        console.log("coincidencia\n");
-                        localStorage.setItem("correoUsado",corrP)
-                        window.location.href="admin.html"
-                        break;
+                        val=true;
                     }else{
-                        console.log("NO HA SIDO IDENTIFICADO")
+                        console.log("NO HA SIDO IDENTIFICADO, posicion "+i)
                         // console.log("i",i)
                         // console.log("arrayCorreos[i][0] ",arrayCorreos[i][0])
                         // console.log("arrayCorreos[i][1]",arrayCorreos[i][1])
                         // console.log("vuelta",vuelta++)
-                        
                     }
                 }
+                val?(localStorage.setItem("correoUsado",corrP),                        
+                window.location.href="admin.html")
+                
+                :null;
             }
             // (val)?console.log("éxito"):alert("Correo o Contraseña no válidos");
         comparaParejas($("#correo").val(),$("#contra").val())
@@ -108,11 +161,57 @@ $("#cierreSesion").click(
         }
         esValido($("#contra").val(),$("#contra2").val())
     }),
-
+    // Qué hay en localStorage
     console.log(" localStorage: "+localStorage.getItem("arrayCorreos"))
+
+    // function (){
+    //     if(window.location.pathname.endsWith("admin.html")){
+    //         // arrayCorreos; Husmear es la tabla de admin.html
+    //         alert("FUNCIONA?")
+    //         for (let index = 0; index < arrayCorreos.length; index++) {
+    //             console.log(arrayCorreos[index][0])
+    //             $("#Husmear").append("<tr><td>${arrayCorreos["+index+"][0]}</td><td>${arrayCorreos["+index+"][1]}</td>"+"<td><button class='btn btn-danger'>Eliminar</button></td></tr>")
+    //         }
+    //         $("#Husmear").DataTable({
+    //             language: {
+    //                 processing: "Procesando...",
+    //                 search: "Buscar:",
+    //                 lengthMenu: "Mostrar _MENU_ registros",
+    //                 info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    //                 infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+    //                 infoFiltered: "(filtrado de un total de _MAX_ registros)",
+    //                 loadingRecords: "Cargando...",
+    //                 zeroRecords: "No se encontraron resultados",
+    //                 emptyTable: "Ningún dato disponible en esta tabla",
+    //                 paginate: {
+    //                     first: "Primero",
+    //                     previous: "Anterior",
+    //                     next: "Siguiente",
+    //                     last: "Último"
+    //                 },
+    //                 aria: {
+    //                     sortAscending: ": Activar para ordenar la columna de manera ascendente",
+    //                     sortDescending: ": Activar para ordenar la columna de manera descendente"
+    //                 }
+    //             }
+    //         });
+            
+    //     }
+    // }
+    
+    
+    
+        }
+    }
+
+
 
 
 )
+
+
+
+
 // DOM Datatables
 
 // function cambio(){

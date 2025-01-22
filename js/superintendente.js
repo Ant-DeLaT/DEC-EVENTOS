@@ -5,10 +5,10 @@
 // 
 let arrayCorreos;
 if(localStorage.getItem("arrayCorreos")===null){
-    arrayCorreos=Array(["correo@prueba.com","1234contra"],["test@test.com","contraseña"]);
+    arrayCorreos=Array(Array("correo@prueba.com","1234contra"),Array("test@test.com","contraseña"));
     localStorage.setItem("arrayCorreos",JSON.stringify(arrayCorreos))
 }else{
-    arrayCorreos=localStorage.getItem("arrayCorreos");
+    arrayCorreos=(localStorage.getItem("arrayCorreos")).valueOf;
 }
 function contraVisible(){
     if(document.getElementById("revela").type==="password"){
@@ -23,7 +23,7 @@ function contraVisible(){
 $().ready(
     $("#ocultaLogin").click(function(){
         // alert("click"),
-        $(".registro").css("display","block"),
+        $(".registro").css("display","inline"),
         $(".login").css("display","none"),
         $("#TITULAR").text("Bienvenido al Registro")
     }
@@ -42,9 +42,9 @@ $("#cierreSesion").click(
     setInterval(function(){
         let cor=$("#correo").val();
         
-        let corVal=($.contains(cor,"@"));
+        let patronImportado=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         // let conVal=$.contains(con,$("#id").val().replace(/ /g,'').length)
-        if(!corVal){
+        if(!patronImportado.test(cor)){
             $("#textoAviso").text("El correo no es válido")
             $("#textoAviso").css("display","block")
             $("#textoAviso").css("color","red")
@@ -65,18 +65,28 @@ $("#cierreSesion").click(
             $("#textoNoContra").css("display","none")
         }
     },500),
+
     console.log($("#contra2").val(),$("#contra2").val()==""),
+
     $("#identificarse").on("click",()=>{
         // comparar pareja email-contraseña con entrante
         // alert("login")
+        let vuelta=0;
             function comparaParejas(valP,conP) {
-                arrayCorreos.forEach(ele => {
-                    if(ele[0]==valP && ele[1]==conP){
-                        alert("AVISO")
-                        document.write("coincidencia\n");
-                        window.location("admin.html")
+                console.log(arrayCorreos());
+                for (let i = 0; i < arrayCorreos.length; i++) {
+                    if(arrayCorreos[i][0]==valP && arrayCorreos[i][1]==conP){
+                        console.log("coincidencia\n");
+                        window.location.href="admin.html"
+                        break;
+                    }else{
+                        console.log("i",i)
+                        console.log("arrayCorreos[i][0] ",arrayCorreos[i][0])
+                        console.log("arrayCorreos[i][1]",arrayCorreos[i][1])
+                        console.log("vuelta",vuelta++)
+                        
                     }
-                });
+                }
             }
             // (val)?console.log("éxito"):alert("Correo o Contraseña no válidos");
         comparaParejas($("#correo").val(),$("#contra").val())
@@ -85,20 +95,22 @@ $("#cierreSesion").click(
         // alert("registro");
         function esValido(con1,con2){
             if(con1==con2){
-                arrayCorreos.push([$("#contra").val(),con1])
+                arrayCorreos.push([$("#correo").val(),con1])
                 localStorage.setItem("arrayCorreos",JSON.stringify(arrayCorreos))
-                window.location="admin.html"
+                window.location.href("admin.html")
             }else{
                 alert("La pareja de contraseñas no es idéntica")
             }
         }
-    esValido($("#contra").val(),$("#contra2").val())
+        esValido($("#contra").val(),$("#contra2").val())
     }),
 
-    
+    console.log(" localStorage: "+localStorage.getItem("arrayCorreos"))
 
 
 )
+// DOM Datatables
+
 // function cambio(){
 //     location.replace("admin.html")
 // }

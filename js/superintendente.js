@@ -1,17 +1,17 @@
 // Vicente; main.js
+// Limpieza de problemas en localStorage
+// localStorage.clear()
 
-// alert("MORTADELO, FILEMÓN!!!!");
-
-// localStorage
 let arrayCorreos;
-if(localStorage.getItem("arrayCorreos")===null){
-    arrayCorreos=Array(Array("correo@prueba.com","1234contra"),Array("test@test.com","contraseña"));
+if(localStorage.getItem("arrayCorreos")===null||localStorage.getItem("arrayCorreos")===undefined){
+    arrayCorreos=Array(Array("correo@prueba.com","1234contra"),Array("test@test.com","contraseña"),Array("t@t.com","1"));
     localStorage.setItem("arrayCorreos",JSON.stringify(arrayCorreos))
 }else{
     // JSON parse se encarga de pasar la información de JSON a otros tipos,
     // en este caso se ha usado para volver a tener Arrays útiles (partiendo de JSON)
-    arrayCorreos=JSON.parse(localStorage.getItem("arrayCorreos"));
+    arrayCorreos=JSON.parse(localStorage.getItem("arrayCorreos"))
 }
+
 // Visibilidad Contraseñas, no funciona
 // function contraVisible(){
 //     if(document.getElementById("revela").type==="password"){
@@ -28,51 +28,21 @@ $("#cierreSesion").click(
     localStorage.removeItem("correoUsado"),
 )
 
+function eliminaDato(posicion){
+    array=JSON.parse(localStorage.getItem("arrayCorreos"));
+    array.splice(posicion,1);
+    localStorage.setItem("arrayCorreos",array)
+}
 
 // DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready
 
 // DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready DOM ready
 
 $().ready(
-    ()=>{
-        let ubicacion=window.location.pathname.split("/").pop();
-        if (ubicacion==="admin.html") {
-            let arrayCorreos2=JSON.parse(localStorage.getItem("arrayCorreos"));
-            //  Husmear es la tabla de admin.html
-            // alert("FUNCIONA?");
-            for (let index = 0; index < arrayCorreos.length; index++) {
-                // console.log(`<tr><td>${arrayCorreos2[index][0]}</td><td>${arrayCorreos2[index][1]}</td><td><button class='btn btn-danger'>Eliminar</button></td></tr>`);
-                $("#Husmear").append(`<tr><td>${arrayCorreos2[index][0]}</td><td>${arrayCorreos2[index][1]}</td><td><button class='btn btn-danger'>Eliminar</button></td></tr>`);
-            }
-            $("#Husmear").DataTable({
-                language: {
-                    processing: "Procesando...",
-                    search: "Buscar:",
-                    lengthMenu: "Mostrar _MENU_ registros",
-                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    loadingRecords: "Cargando...",
-                    zeroRecords: "No se encontraron resultados",
-                    emptyTable: "Ningún dato disponible en esta tabla",
-                    paginate: {
-                        first: "Primero",
-                        previous: "Anterior",
-                        next: "Siguiente",
-                        last: "Último"
-                    },
-                    aria: {
-                        sortAscending: ": Activar para ordenar la columna de manera ascendente",
-                        sortDescending: ": Activar para ordenar la columna de manera descendente"
-                    }
-                }
-            });
-        }else{
     
-
-
-
-
+    ()=>{
+        // Es admin.html?, window.location.pathname.split("SEPARADOR").pop() saca el último dato de la direccion del navegador
+       
     $("#ocultaLogin").click(function(){
         // alert("click"),
         $(".registro").css("display","inline"),
@@ -202,7 +172,7 @@ $("#ocultaRegistro").click(function(){
     
     
         }
-    }
+    
 
 
 

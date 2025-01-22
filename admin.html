@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="libs/datatables.css">
         
     </head>
-    <script href="libs/datatables.js"></script>
+    
     <body>
         <header>
             Saludos usuario
@@ -52,6 +52,7 @@
         <!-- Bootstrap JavaScript Libraries -->
         <script src="libs/jquery-3.7.1.min.js"></script>
         <script src="js/superintendente.js"></script>
+        <script href="libs/datatables.min.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -63,5 +64,37 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script>
+            // Datatables no funciona
+        let arrayCorreos2=JSON.parse(localStorage.getItem("arrayCorreos"));
+            //  Husmear es la tabla de admin.html
+            // alert("FUNCIONA?");
+            for (let index = 0; index < arrayCorreos2.length; index++) {
+                // console.log(`<tr><td>${arrayCorreos2[index][0]}</td><td>${arrayCorreos2[index][1]}</td><td><button class='btn btn-danger'>Eliminar</button></td></tr>`);
+                $("#Husmear").append(`<tr><td>${arrayCorreos2[index][0]}</td><td>${arrayCorreos2[index][1]}</td><td><button class='btn btn-danger' onclick="eliminaDato(`+index+`})">Eliminar</button></td></tr>`);
+            }
+        $("#Husmear").DataTable({
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                loadingRecords: "Cargando...",
+                zeroRecords: "No se encontraron resultados",
+                emptyTable: "Ningún dato disponible en esta tabla",
+                paginate: {
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                },
+                aria: {
+                    sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sortDescending: ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });</script>
     </body>
 </html>
